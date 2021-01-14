@@ -1,7 +1,7 @@
 import argparse
 import xml.dom.minidom
 
-def get_wh_from_xml(xml_path=None):
+def calculate_wh(xml_path=None):
     xml_tree = xml.dom.minidom.parse(xml_path)
     rootNode = xml_tree.documentElement
     objects = rootNode.getElementsByTagName("object")
@@ -22,6 +22,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser() 
     parser.add_argument('--xml_path', '-x', default=None, help='path of the xml file')
     args = parser.parse_args()
-    wh = get_wh_from_xml(args.xml_path)
+    wh = calculate_wh(args.xml_path)
     
     
