@@ -9,13 +9,14 @@ def calculate_wh(xml_path=None):
     
     for obj in objects:
         # box = obj.getElementsByTagName("bndbox")
+        class_name = str(obj.getElementsByTagName("name")[0].firstChild.data)
         xmax = int(obj.getElementsByTagName("xmax")[0].firstChild.data)
         ymax = int(obj.getElementsByTagName("ymax")[0].firstChild.data)
         xmin = int(obj.getElementsByTagName("xmin")[0].firstChild.data)
         ymin = int(obj.getElementsByTagName("ymin")[0].firstChild.data)
         w = xmax - xmin
         h = ymax - ymin
-        wh.append([w,h])
+        wh.append([class_name,w,h])
     return wh
 
 if __name__ == '__main__':

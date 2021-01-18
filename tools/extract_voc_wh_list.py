@@ -11,7 +11,10 @@ def get_wh_list(txt_path=None, xml_folder=None):
     xml_list, _ = generate_xml_and_image_list(txt_path, xml_folder)
     wh_list = []
     for xml_file in xml_list:
-        wh_list.append(calculate_wh(xml_file))
+        wh_results = calculate_wh(xml_file)
+        for wh in wh_results:
+            wh_list.append(wh)
+
     return wh_list
 
 if __name__ == "__main__":
@@ -20,6 +23,6 @@ if __name__ == "__main__":
     parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file')
     args = parser.parse_args()
     wh_list = get_wh_list(args.txt_path, args.xml_folder)
-    print(len(wh_list))
+    print((wh_list))
 
 

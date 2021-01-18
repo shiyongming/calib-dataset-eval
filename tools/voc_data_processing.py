@@ -7,7 +7,6 @@ def generate_xml_and_image_list(txt_path=None, xml_folder=None):
     xml_file_list = []
     image_list = []
     for line in f:
-        
         #generate xml list
         xml_filename = xml_folder + line[:-4] + "xml"
         xml_file_list.append(xml_filename)
