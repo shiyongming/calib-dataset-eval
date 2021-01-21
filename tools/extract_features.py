@@ -1,11 +1,11 @@
-from argparse import ArgumentParser
 from voc_data_processing import generate_xml_and_image_list
+from argparse import ArgumentParser
 from mmdet.apis import calculate_features, init_detector
 import numpy as np
 
-def extract_features(config, checkpoint, device,
-                     txt_path, xml_folder, image_folder,
-                     last_layer, save_features):
+def extract_features_array(config, checkpoint, device,
+                           txt_path, xml_folder, image_folder,
+                           last_layer, save_features):
     # build the model from a config file and a checkpoint file
     model = init_detector(config, checkpoint, device=device)
     # get test img list
@@ -32,6 +32,6 @@ if __name__ == '__main__':
     parser.add_argument('--last_layer', '-l', default=None, type=int, help='the last i th feature map')
     parser.add_argument('--save_features', '-s', default=False, type=bool, help='save the features')
     args = parser.parse_args()
-    extract_features(args.config, args.checkpoint, args.device,
-                     args.txt_path, args.xml_folder, args.image_folder,
-                     args.last_layer, args.save_features)
+    extract_features_array(args.config, args.checkpoint, args.device,
+                           args.txt_path, args.xml_folder, args.image_folder,
+                           args.last_layer, args.save_features)
