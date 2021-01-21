@@ -4,6 +4,8 @@ import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 from voc_data_processing import generate_wh_xyminmax_list, generate_xml_and_image_list
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
 from kernels.calculate_humoments import calculate_humoments
 import random
 random.seed(2021)
@@ -61,7 +63,7 @@ def plot_humoments(train_image_list, train_xyminmax_list, calib_image_list, cali
             cls_name = train_plot_list[0][i][0]
             train_x = np.log(np.abs(train_plot_list[1][i])) # hu_moments_1
             train_y = np.log(np.abs(train_plot_list[2][i])) # hu_moments_1
-            plt.scatter(train_x , train_y, s=area, c=colors[classes_names.index(cls_name)], alpha=0.3, label=cls_name)
+            plt.scatter(train_x , train_y, s=area, c=colors[classes_names.index(cls_name)], alpha=0.1, label=cls_name)
             calib_cls_name = calib_plot_list[0][i][0]
             calib_x = np.log(np.abs(calib_plot_list[1][i])) # hu_moments_1
             calib_y = np.log(np.abs(calib_plot_list[2][i])) # hu_moments_2
@@ -97,14 +99,13 @@ if __name__ == "__main__":
     parser.add_argument('--train_txt_path', '-t', default=None, help='path of the training txt file')
     parser.add_argument('--calib_txt_path', '-c', default=None, help='path of the calibration txt file')
     parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file')
-    parser.add_argument('--image_folder', '-i', default=None, help='folder of images')
     parser.add_argument('--class_idx', '-cl', default=None, type=int, help='index number of class')
     args = parser.parse_args()
    
-    trian_xml_list, train_image_list = generate_xml_and_image_list(args.train_txt_path, args.xml_folder, args.image_folder)
+    trian_xml_list, train_image_list = generate_xml_and_image_list(args.train_txt_path, args.xml_folder)
     _, train_xyminmax_list = generate_wh_xyminmax_list(args.train_txt_path, args.xml_folder)
    
-    calib_xml_list, calib_image_list = generate_xml_and_image_list(args.calib_txt_path, args.xml_folder, args.image_folder)
+    calib_xml_list, calib_image_list = generate_xml_and_image_list(args.calib_txt_path, args.xml_folder)
     _, calib_xyminmax_list = generate_wh_xyminmax_list(args.calib_txt_path, args.xml_folder)
 
     plot_humoments(train_image_list, train_xyminmax_list, calib_image_list, calib_xyminmax_list, args.class_idx)
