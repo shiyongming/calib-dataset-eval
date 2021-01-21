@@ -3,8 +3,6 @@ import sys
 import argparse
 import xml.dom.minidom
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
 from kernels.calculate_voc_wh_xy import calculate_wh_xy
 
 def generate_xml_and_image_list(txt_path=None, xml_folder=None):

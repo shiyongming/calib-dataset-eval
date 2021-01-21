@@ -4,8 +4,6 @@ import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 from voc_data_processing import generate_wh_xyminmax_list, generate_xml_and_image_list
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
 from kernels.calculate_humoments import calculate_humoments
 import random
 random.seed(2021)
