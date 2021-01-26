@@ -1,3 +1,5 @@
+temp_test_data/features_tensor.pt
+temp_test_data/saved_trainset_features_4.npy
 test_dataset/voc/Annotations/class1_0002.xml
 test_dataset/voc/Annotations/class1_0010.xml
 test_dataset/voc/Annotations/class1_0021.xml
