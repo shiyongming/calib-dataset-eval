@@ -20,33 +20,36 @@ This repo aims to provide a tool to evaluate the calibration dataset before quan
 This tool evaluate the calibration dataset from three aspects: input images (Hu moments), output results (labels), and intermediate features (embeddings).
 
 ## Requirement
-sklearn     
-
-opencv-python>=4.4.0.46     
-
-Pytorch1.6      
-
-https://github.com/open-mmlab/mmdetection or https://github.com/grimoire/mmdetection-to-tensorrt
+- sklearn     
+- opencv-python>=4.4.0.46     
+- Pytorch1.6      
+- https://github.com/open-mmlab/mmdetection or https://github.com/grimoire/mmdetection-to-tensorrt
 
 
 ## Getting start
+git clone and build the docker
+```shell
 git clone https://github.com/shiyongming/calib-dataset-eval.git
 cd calib-dataset-eval
 docker build -t calib-dataset-eval:v0.1 docker/
+```
 
-### calculate the Hu moments
-python visualization/visualization_humoments.py 
-    -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
-    -c <path/of/calibration_dataset.txt>  # format like train.txt
-    -x <path/of/VOC2007/Annotations/>  # which contains .xml file
-    -i <prefix/path/for/filename/in/xml/file>  # (optional) prefix of the filename item in .xml file
-    -cl <class index>  # which class you want to calculat and visualize
+calculate the Hu moments
+```shell
+python visualization/visualization_humoments.py \
+    -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ \
+    -c <path/of/calibration_dataset.txt>  # format like train.txt \
+    -x <path/of/VOC2007/Annotations/>  # which contains .xml file \
+    -i <prefix/path/for/filename/in/xml/file>  # (optional) prefix of the filename item in .xml file \
+    -cl <class index>  # which class you want to calculat and visualize \
+```
 
-### calculate the Hu moments
+calculate the Hu moments
+```shell
 python visualization/visualization_wh.py 
-    -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
-    -c <path/of/calibration_dataset.txt>  # format like train.txt
-    -x <path/of/VOC2007/Annotations/>  # which contains .xml file
+    -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ \
+    -c <path/of/calibration_dataset.txt>  # format like train.txt \
+    -x <path/of/VOC2007/Annotations/>  # which contains .xml file \
     -cl <class index>  # which class you want to calculat and 
-    
+``` 
 ###
