@@ -13,7 +13,7 @@ def readme():
     return content
 
 
-version_file = 'mmdet/version.py'
+version_file = 'version.py'
 
 
 def get_version():
@@ -139,17 +139,22 @@ if __name__ == '__main__':
             'License :: OSI Approved :: Apache Software License',
             'Operating System :: OS Independent',
             'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
         ],
         license='Apache License 2.0',
         setup_requires=parse_requirements('requirements.txt'),
-        # tests_require=parse_requirements('requirements/tests.txt'),
-        # install_requires=parse_requirements('requirements/runtime.txt'),
-        # extras_require={
-        #     'all': parse_requirements('requirements.txt'),
-        #     'tests': parse_requirements('requirements/tests.txt'),
-        #     'build': parse_requirements('requirements/build.txt'),
-        #     'optional': parse_requirements('requirements/optional.txt'),
-        # },
+        tests_require=parse_requirements('requirements/tests.txt'),
+        install_requires=parse_requirements('requirements/runtime.txt'),
+        extras_require={
+            'all': parse_requirements('requirements.txt'),
+            'tests': parse_requirements('requirements/tests.txt'),
+            'build': parse_requirements('requirements/build.txt'),
+            'optional': parse_requirements('requirements/optional.txt'),
+        },
         ext_modules=[],
         cmdclass={'build_ext': BuildExtension},
         zip_safe=False)
+        
+        
