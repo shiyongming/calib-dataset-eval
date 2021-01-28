@@ -23,7 +23,7 @@ This tool evaluate the calibration dataset from three aspects: input images (Hu 
 - sklearn     
 - opencv-python>=4.4.0.46     
 - Pytorch1.7
-- mmcv>=1.2.4 <=1.3 
+- mmcv>=1.2.4 <1.3 
 - https://github.com/open-mmlab/mmdetection or https://github.com/grimoire/mmdetection-to-tensorrt
 
 
