@@ -6,8 +6,8 @@ from argparse import ArgumentParser
 import numpy as np
 import torch
 
-from dataset.voc_dataset import generate_xml_and_image_list
-from dataset.voc_dataset import get_label_wh_xy_minmax
+from dataset.voc_dataset.voc_data_processing import generate_xml_and_image_list
+from dataset.voc_dataset.voc_data_processing import get_label_wh_xy_minmax
 
 import mmcv
 from mmcv.ops import RoIPool
