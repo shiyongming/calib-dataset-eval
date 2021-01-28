@@ -34,7 +34,7 @@ cd calib-dataset-eval
 docker build -t calib-dataset-eval:v0.1 docker/
 ```
 
-calculate the Hu moments
+Evaluate the Hu moments distribution
 ```shell
 python visualization/visualization_humoments.py \
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ \
@@ -44,7 +44,8 @@ python visualization/visualization_humoments.py \
     -cl <class index>  # which class you want to calculat and visualize \
 ```
 
-calculate the Hu moments
+
+Evaluate the weight and height (label) distribution
 ```shell
 python visualization/visualization_wh.py
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
@@ -53,7 +54,8 @@ python visualization/visualization_wh.py
     -cl <class index>  # which class you want to calculat and 
 ``` 
 
-extract feature embeddings
+
+Extract feature embeddings
 ```shell
 python tools/extract_features.py 
     <path of mmdet config file> 
