@@ -40,16 +40,27 @@ python visualization/visualization_humoments.py \
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ \
     -c <path/of/calibration_dataset.txt>  # format like train.txt \
     -x <path/of/VOC2007/Annotations/>  # which contains .xml file \
-    -i <prefix/path/for/filename/in/xml/file>  # (optional) prefix of the filename item in .xml file \
+    -i <prefix/path/for/filename/in/xml/file>  # (optional) prefix of the 'filename' item in .xml file \
     -cl <class index>  # which class you want to calculat and visualize \
 ```
 
 calculate the Hu moments
 ```shell
-python visualization/visualization_wh.py 
-    -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ \
-    -c <path/of/calibration_dataset.txt>  # format like train.txt \
-    -x <path/of/VOC2007/Annotations/>  # which contains .xml file \
+python visualization/visualization_wh.py
+    -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
+    -c <path/of/calibration_dataset.txt>  # format like train.txt 
+    -x <path/of/VOC2007/Annotations/>  # which contains .xml file 
     -cl <class index>  # which class you want to calculat and 
 ``` 
-###
+
+extract feature embeddings
+```shell
+python tools/extract_features.py 
+    <path of mmdet config file> 
+    <path of mmdet checkpoint file> 
+    -t <path/of/VOC2007/.txt file> # which contains image list
+    -x <path/of/VOC2007/Annotations/> # which contains .xml file
+    -i <image root> # prefix of the 'filename' item in .xml file
+    -l <layer number> # which layer of feature embedding you want to extract (count from back to front)
+    -s <True or False> # save the extracted embeddings
+```

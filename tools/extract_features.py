@@ -15,7 +15,7 @@ from mmcv.parallel import collate, scatter
 
 from mmdet.datasets.pipelines import Compose
 from mmdet.datasets import replace_ImageToTensor
-from mmdet.apis import calculate_features, init_detector
+from mmdet.apis import init_detector
 
 def calculate_features(model, img, last_layer=1):
     """Calculate backbone feature(s) with the detector.

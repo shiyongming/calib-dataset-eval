@@ -14,7 +14,7 @@ def generate_xml_and_image_list(txt_path=None, xml_folder=None, image_root=''):
     image_list = []
     for line in f:
         #generate xml list
-        xml_filename = xml_folder + str(line[:-1]) + "xml"
+        xml_filename = xml_folder + str(line[:-1]) + ".xml"
         xml_file_list.append(xml_filename)
         
         #generate image filename list
