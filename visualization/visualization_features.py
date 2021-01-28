@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
+
 from argparse import ArgumentParser
 import numpy as np
 from tools.calcualte_pca_features import feature_pca
@@ -76,6 +80,7 @@ def visualization_features(pca_feature=None,
                        c="red",
                        marker='x',
                        alpha=0.3)
+        plt.savefig(r'features distribution.png', dpi=600)
         plt.show()
 
 
@@ -110,6 +115,7 @@ def visualization_features(pca_feature=None,
                         c="red",
                         marker='x',
                         alpha=0.5)
+        plt.savefig(r'features distribution.png', dpi=600)
         plt.show()
 
 if __name__ == '__main__':
