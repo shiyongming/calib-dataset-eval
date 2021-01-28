@@ -20,7 +20,10 @@ This repo aims to provide a tool to evaluate the calibration dataset before quan
 This tool evaluate the calibration dataset from three aspects: input images (Hu moments), output results (labels), and intermediate features (embeddings).
 
 # Requirement
-sklearn 
-opencv-python>=4.4.0.46 
-Pytorch1.6  
+sklearn     
+
+opencv-python>=4.4.0.46     
+
+Pytorch1.6      
+
 https://github.com/open-mmlab/mmdetection or https://github.com/grimoire/mmdetection-to-tensorrt
