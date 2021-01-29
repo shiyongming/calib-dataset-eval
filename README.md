@@ -56,7 +56,7 @@ python visualization/visualization_wh.py
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
     -c <path/of/calibration_dataset.txt>  # format like train.txt 
     -x <path/of/VOC2007/Annotations/>  # which contains .xml file 
-    -cl <class index>  # which class you want to calculat and 
+    -cl <class index>  # which class you want to calculate and visualize
 ``` 
 ![Labels ditribution](visualization/visualization_results/wh.png) 
 
