@@ -36,7 +36,7 @@ docker build -t calib-dataset-eval:v0.1 docker/
 ```
 
 Evaluate the Hu moments distribution
-```shell
+```python
 python visualization/visualization_humoments.py \
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ \
     -c <path/of/calibration_dataset.txt>  # format like train.txt \
@@ -44,10 +44,12 @@ python visualization/visualization_humoments.py \
     -i <prefix/path/for/filename/in/xml/file>  # (optional) prefix of the 'filename' item in .xml file \
     -cl <class index>  # which class you want to calculat and visualize \
 ```
+![demoimage](visualization/visualization_results/features distribution.png)
 
+note:
 
 Evaluate the weight and height (label) distribution
-```shell
+```python
 python visualization/visualization_wh.py
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
     -c <path/of/calibration_dataset.txt>  # format like train.txt 
@@ -57,7 +59,7 @@ python visualization/visualization_wh.py
 
 
 Extract feature embeddings
-```shell
+```python
 python tools/extract_features.py 
     <path of mmdet config file> 
     <path of mmdet checkpoint file> 
@@ -65,5 +67,5 @@ python tools/extract_features.py
     -x <path/of/VOC2007/Annotations/> # which contains .xml file
     -i <image root> # prefix of the 'filename' item in .xml file
     -l <layer number> # which layer of feature embedding you want to extract (count from back to front)
-    -s <True or False> # save the extracted embeddings
+    -s <boolean> # save the extracted embeddings
 ```
