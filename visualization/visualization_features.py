@@ -120,20 +120,31 @@ def visualization_features(pca_feature=None,
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('--trainset_np_file', '-trf', help='numpy file of training set feature')
-    parser.add_argument('--trainset_np_array', '-tra', help='numpy array of training set feature')
-    parser.add_argument('--trainset_label_np_file', '-trl', help='numpy file of training set label')
-    parser.add_argument('--testset_np_file', '-tef', help='numpy file of testing set feature')
-    parser.add_argument('--testset_np_array', '-tea', help='numpy array of testing set feature')
-    parser.add_argument('--testset_label_np_file', '-tel', help='numpy file of testing set label')
+    parser.add_argument('--trainset_np_file', '-tf', default=None, help='numpy file of training set feature')
+    parser.add_argument('--trainset_np_array', '-ta', default=None, help='numpy array of training set feature')
+    parser.add_argument('--trainset_label_np_file', '-tl', default=None, help='numpy file of training set label')
+    parser.add_argument('--calibset_np_file', '-cf', default=None, help='numpy file of testing set feature')
+    parser.add_argument('--calibset_np_array', '-ca', default=None, help='numpy array of testing set feature')
+    parser.add_argument('--calibset_label_np_file', '-cl', default=None, help='numpy file of testing set label')
     parser.add_argument('--plotdim', '-p', type=int, help='plot dimension')
     args = parser.parse_args()
 
-    trainset_feature_pca, testset_feature_projected, _ = feature_pca(
-        npfile_for_cal_pca=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_features_2.npy',
-        npfile_for_cal_projection=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_features_2.npy',
+    # trainset_feature_pca, testset_feature_projected, _ = feature_pca(
+    #     npfile_for_cal_pca=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_features_2.npy',
+    #     npfile_for_cal_projection=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_features_2.npy',
+    #     dim=2)
+    # visualization_features(pca_feature=trainset_feature_pca,
+    #                        pca_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_labels_4.npy',
+    #                        projected_feature = testset_feature_projected,
+    #                        dim=2)
+    trainset_feature_pca, calib_feature_projected, _ = feature_pca(
+        npfile_for_cal_pca=args.trainset_np_file,
+        nparray_for_cal_pca=args.trainset_np_array,
+        npfile_for_cal_projection=args.calibset_np_file,
+        nparray_for_cal_projection=args.calibset_np_array,
         dim=2)
     visualization_features(pca_feature=trainset_feature_pca,
-                           pca_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_labels_4.npy',
-                           projected_feature = testset_feature_projected,
+                           pca_feature_label_file=args.trainset_label_np_file,
+                           projected_feature = calib_feature_projected,
+                           projected_feature_label_file=args.calibset_label_np_file,
                            dim=2)
