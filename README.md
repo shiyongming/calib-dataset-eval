@@ -47,7 +47,7 @@ python visualization/visualization_humoments.py
     -i <prefix/path/for/filename/in/xml/file>  # (optional) prefix of the 'filename' item in .xml file
     -cl <class index>  # which class you want to calculat and visualize
 ```
-[Hu moments ditribution](visualization/visualization_results/hu_moments.png) 
+![Hu moments ditribution](visualization/visualization_results/hu_moments.png) 
 
 
 Evaluate the weight and height (label) distribution
@@ -58,7 +58,7 @@ python visualization/visualization_wh.py
     -x <path/of/VOC2007/Annotations/>  # which contains .xml file 
     -cl <class index>  # which class you want to calculat and 
 ``` 
-[Labels ditribution](visualization/visualization_results/wh.png) 
+![Labels ditribution](visualization/visualization_results/wh.png) 
 
 Extract feature embeddings
 ```python
@@ -83,4 +83,4 @@ python visualization/visualization_features.py
     -cl <numpy file which contains calibset labels>, # -cl can be set when each image only contains one label
     -d <visualization dimension>
 ```
-[embeddings distribution](visualization/visualization_results/features_distribution.png)
+![embeddings distribution](visualization/visualization_results/features_distribution.png)
