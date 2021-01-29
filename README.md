@@ -44,7 +44,9 @@ python visualization/visualization_humoments.py \
     -i <prefix/path/for/filename/in/xml/file>  # (optional) prefix of the 'filename' item in .xml file \
     -cl <class index>  # which class you want to calculat and visualize \
 ```
-[demo image](visualization/visualization_results/features distribution.png)
+
+ [demo image](visualization\visualization_results\features distribution.png)
+ The toolbox stems from the codebase developed by the *MMDet* team, who won [COCO Detection Challenge](http://cocodataset.org/#detection-leaderboard) in 2018, and we keep pushing it forward.
 
 note:
 
