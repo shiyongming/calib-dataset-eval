@@ -92,6 +92,7 @@ def extract_features_array(config, checkpoint, device,
         feature_list.append(backbone_features.cpu().numpy())
     if save_features:
         np.save("saved_features_%s" %args.last_layer, np.array(feature_list))
+        np.save("saved_features_labels_%s" % args.last_layer, np.array(label_list))
     print("shape of feature list is: ", np.array(feature_list).shape)
     return feature_list, label_list
 

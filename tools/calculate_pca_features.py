@@ -56,6 +56,6 @@ def feature_pca(npfile_for_cal_pca=None,
 if __name__ == '__main__':
     feature_pca(
         npfile_for_cal_pca=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_features_2.npy',
-        trainset_label_np_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_labels_4.npy',
+        # trainset_label_np_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_labels_4.npy',
         npfile_for_cal_projection=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_features_2.npy',
         dim=2)

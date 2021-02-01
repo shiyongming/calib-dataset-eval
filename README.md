@@ -12,7 +12,7 @@ Calculate and visualize the labels distribution of calibration dataset and train
 # Background
 As we know, during the quantization process, a calibration dataset is necessary. The size of calibration dataset depends on tasks and models. In other words, different type of tasks or model structures need different samples amount for calibration.
 
-There are two main reasons for the bad result of quantization. One is caused by the calibration dataset which doesn't cover the major distribution of training dataset. The other one is caused by model structure which is not suitable for quantization. [Quantizing deep convolutional networks for efficient inference: A whitepaper](https://arxiv.org/pdf/1806.08342.pdf)
+There are two main reasons for the bad result of quantization. One is caused by the calibration dataset which doesn't cover the major distribution of training dataset. The other one is caused by model structure which is not suitable for quantization ([Refer to: Quantizing deep convolutional networks for efficient inference: A whitepaper](https://arxiv.org/pdf/1806.08342.pdf)).
 
 For the calibration dataset, let us take TensorRT as an example. For TensorRT, experiments indicate that about 500 images are sufficient for calibrating ImageNet classification networks. However, how many images for other tasks or networks? And, when someone obtained an unsatisfying quantization result, how to check whether it was caused by the calibration dataset reason or not?
 
@@ -25,7 +25,7 @@ For the intermediate level (intermediate feature), we calaulate and compare the 
 ## Requirement
 - sklearn     
 - opencv-python>=4.4.0.46     
-- Pytorch1.7
+- Pytorch 1.7 (recommend)
 - mmcv>=1.2.4 <1.3 
 - https://github.com/open-mmlab/mmdetection or https://github.com/grimoire/mmdetection-to-tensorrt
 

@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 
 from argparse import ArgumentParser
 import numpy as np
-from tools.calcualte_pca_features import feature_pca
+from tools.calculate_pca_features import feature_pca
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -92,8 +92,9 @@ def visualization_features(pca_feature=None,
                     plt.scatter(pca_feature[pca_feature_labels==cls_name,0],
                                 pca_feature[pca_feature_labels==cls_name, 1],
                                 c=colors[classes_names.index(cls_name)],
+                                label=cls_name,
                                 s=area,
-                                alpha=0.3)
+                                alpha=0.1)
         else:
             plt.scatter(pca_feature[:,0],
                         pca_feature[:,1],
@@ -108,13 +109,14 @@ def visualization_features(pca_feature=None,
                                 projected_feature[projected_feature_labels==cls_name, 1],
                                 c=colors[classes_names.index(cls_name)],
                                 marker='x',
-                                alpha=0.3)
+                                alpha=0.5)
         else:
             plt.scatter(projected_feature[:, 0],
                         projected_feature[:, 1],
                         c="red",
                         marker='x',
-                        alpha=0.5)
+                        alpha=0.3)
+        plt.legend()
         plt.savefig(r'features distribution.png', dpi=600)
         plt.show()
 
@@ -129,22 +131,23 @@ if __name__ == '__main__':
     parser.add_argument('--plotdim', '-p', type=int, help='plot dimension')
     args = parser.parse_args()
 
-    # trainset_feature_pca, testset_feature_projected, _ = feature_pca(
-    #     npfile_for_cal_pca=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_features_2.npy',
-    #     npfile_for_cal_projection=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_features_2.npy',
-    #     dim=2)
-    # visualization_features(pca_feature=trainset_feature_pca,
-    #                        pca_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_labels_4.npy',
-    #                        projected_feature = testset_feature_projected,
-    #                        dim=2)
-    trainset_feature_pca, calib_feature_projected, _ = feature_pca(
-        npfile_for_cal_pca=args.trainset_np_file,
-        nparray_for_cal_pca=args.trainset_np_array,
-        npfile_for_cal_projection=args.calibset_np_file,
-        nparray_for_cal_projection=args.calibset_np_array,
+    trainset_feature_pca, testset_feature_projected, _ = feature_pca(
+        npfile_for_cal_pca=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_features_3.npy',
+        npfile_for_cal_projection=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_features_3.npy',
         dim=2)
     visualization_features(pca_feature=trainset_feature_pca,
-                           pca_feature_label_file=args.trainset_label_np_file,
-                           projected_feature = calib_feature_projected,
-                           projected_feature_label_file=args.calibset_label_np_file,
+                           pca_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_labels_3.npy',
+                           projected_feature = testset_feature_projected,
+                           projected_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_labels_3.npy',
                            dim=2)
+    # trainset_feature_pca, calib_feature_projected, _ = feature_pca(
+    #     npfile_for_cal_pca=args.trainset_np_file,
+    #     nparray_for_cal_pca=args.trainset_np_array,
+    #     npfile_for_cal_projection=args.calibset_np_file,
+    #     nparray_for_cal_projection=args.calibset_np_array,
+    #     dim=2)
+    # visualization_features(pca_feature=trainset_feature_pca,
+    #                        pca_feature_label_file=args.trainset_label_np_file,
+    #                        projected_feature = calib_feature_projected,
+    #                        projected_feature_label_file=args.calibset_label_np_file,
+    #                        dim=2)
