@@ -38,7 +38,7 @@ cd calib-dataset-eval
 docker build -t calib-dataset-eval:v0.1 docker/
 ```
 
-Evaluate the Hu moments distribution
+Evaluate Hu moments ([Image moment](https://en.wikipedia.org/wiki/Image_moment#cite_note-%E2%80%9Chu-1)) distribution
 ```python
 python visualization/visualization_humoments.py 
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
@@ -50,7 +50,7 @@ python visualization/visualization_humoments.py
 ![Hu moments ditribution](visualization/visualization_results/hu_moments.png) 
 
 
-Evaluate the weight and height (label) distribution
+Evaluate weight and height (label) distribution
 ```python
 python visualization/visualization_wh.py
     -t <path/of/train.txt>  # usually in VOC2007/ImageSets/Main/ 
@@ -72,7 +72,7 @@ python tools/extract_features.py
     -s <boolean> # save the extracted embeddings
 ```
 
-Evaluate the intermediate feature distribution
+Evaluate intermediate features (embeddings) distribution
 ```python
 python visualization/visualization_features.py
     -tf <numpy file which contains trainset embeddings>,
