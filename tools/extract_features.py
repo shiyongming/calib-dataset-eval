@@ -97,15 +97,18 @@ def extract_features_array(config, checkpoint, device,
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('config', help='Config file')
-    parser.add_argument('checkpoint', help='Checkpoint file')
+    parser.add_argument('config', help='Config file of mmdet model')
+    parser.add_argument('checkpoint', help='Checkpoint file of mmdet model')
     parser.add_argument('--device', default='cuda:0', help='Device used for inference')
-    parser.add_argument('--txt_path', '-t', default=None, help='path of the txt file')
-    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file')
+    parser.add_argument('--txt_path', '-t', default=None, help='path of the txt file for VOC dataset')
+    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC dataset')
     parser.add_argument('--image_folder', '-i', default=None, help='folder of images')
     parser.add_argument('--last_layer', '-l', default=None, type=int, help='the last i th feature map')
     parser.add_argument('--save_features', '-s', default=False, type=bool, help='save the features')
     args = parser.parse_args()
-    extract_features_array(args.config, args.checkpoint, args.device,
-                           args.txt_path, args.xml_folder, args.image_folder,
-                           args.last_layer, args.save_features)
+
+    # VOC dataset format
+    if args.txt_path and args.xml_folder and args.image_folder:
+        extract_features_array(args.config, args.checkpoint, args.device, # basic info
+                            args.txt_path, args.xml_folder, args.image_folder, # VOC params
+                            args.last_layer, args.save_features) # output params

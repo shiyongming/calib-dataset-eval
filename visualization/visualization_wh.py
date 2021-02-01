@@ -97,12 +97,15 @@ def plot_wh(wh_list, calib_wh_list, class_idx):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser() 
-    parser.add_argument('--train_txt_path', '-t', default=None, help='path of the training txt file')
-    parser.add_argument('--calib_txt_path', '-c', default=None, help='path of the calibration txt file')
-    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file')
+    parser.add_argument('--train_txt_path', '-t', default=None, help='path of the training txt file for VOC format')
+    parser.add_argument('--calib_txt_path', '-c', default=None, help='path of the calibration txt file for VOC format')
+    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC format')
     parser.add_argument('--class_idx', '-cl', default=None, type=int, help='index number of class')
     args = parser.parse_args()
+
+    # VOC dataset format
     wh_list, _= generate_wh_xyminmax_list(args.train_txt_path, args.xml_folder)
     calib_wh_list, _ = generate_wh_xyminmax_list(args.calib_txt_path, args.xml_folder)
     plot_wh(wh_list, calib_wh_list, args.class_idx)
     
+    # TODO COCO dataset

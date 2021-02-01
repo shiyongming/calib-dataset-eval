@@ -96,19 +96,23 @@ def plot_humoments(train_image_list, train_xyminmax_list, calib_image_list, cali
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser() 
-    parser.add_argument('--train_txt_path', '-t', default=None, help='path of the training txt file')
-    parser.add_argument('--calib_txt_path', '-c', default=None, help='path of the calibration txt file')
-    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file')
+    parser.add_argument('--train_txt_path', '-t', default=None, help='path of the training txt file for VOC format')
+    parser.add_argument('--calib_txt_path', '-c', default=None, help='path of the calibration txt file for VOC format')
+    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC format')
     parser.add_argument('--image_root', '-i', default=None, help='prefix path for filename in xml file')
     parser.add_argument('--class_idx', '-cl', default=None, type=int, help='index number of class')
     args = parser.parse_args()
-   
+    
+    # VOC dataset format
     trian_xml_list, train_image_list = generate_xml_and_image_list(args.train_txt_path, args.xml_folder, args.image_root)
     _, train_xyminmax_list = generate_wh_xyminmax_list(args.train_txt_path, args.xml_folder)
    
     calib_xml_list, calib_image_list = generate_xml_and_image_list(args.calib_txt_path, args.xml_folder, args.image_root)
     _, calib_xyminmax_list = generate_wh_xyminmax_list(args.calib_txt_path, args.xml_folder)
 
+    # TODO COCO dataset format
+
+    
     plot_humoments(train_image_list, train_xyminmax_list, calib_image_list, calib_xyminmax_list, args.class_idx)
 
 

@@ -77,10 +77,10 @@ Evaluate the intermediate feature distribution
 python visualization/visualization_features.py
     -tf <numpy file which contains trainset embeddings>,
     -tn <numpy array which contains trainset embeddings>,
-    -tl <numpy file which contains trainset labels>, # -tl can be set when each image only contains one label
+    -tl <numpy file which contains trainset labels>, # -tl only can be set when each image only contains one label
     -cf <numpy file which contains calibset embeddings>,
     -cn <numpy array which contains calibset embeddings>,
-    -cl <numpy file which contains calibset labels>, # -cl can be set when each image only contains one label
+    -cl <numpy file which contains calibset labels>, # -cl only can be set when each image only contains one label
     -d <visualization dimension>
 ```
 ![embeddings distribution](visualization/visualization_results/features_distribution.png)
