@@ -28,8 +28,8 @@ def get_label_wh_xy_minmax(xml_path=None):
         y = (ymax + ymin)/2
         # print(class_name)
         labels.append([class_name])
-        wh.append([class_name,w,h])
-        xy.append([class_name,x,y])
+        wh.append([class_name,w,h]) # for wh visualization
+        xy.append([class_name,x,y]) # used for cropping images and visualizing Hu moments
         xyminmax.append([class_name, xmin, ymin, xmax, ymax])
     return labels, wh, xy, xyminmax
 
