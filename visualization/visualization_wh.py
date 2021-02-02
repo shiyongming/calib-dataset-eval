@@ -6,7 +6,7 @@ import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 from dataset.voc_dataset.voc_data_processing import generate_wh_xyminmax_list
-from dataset.coco_dataset.coco_data_processing import get_coco_wh_xyminmax
+from dataset.coco_dataset.coco_data_processing import get_coco_wh_xyminmax, generate_calibset
 import random
 
 random.seed(2021)
@@ -77,13 +77,15 @@ def plot_wh(wh_list, calib_wh_list, ids_or_names=None, plot_idx=None):
         calib_x = calib_plot_list[1][plot_idx]  # w
         calib_y = calib_plot_list[2][plot_idx]  # h
         if type(cls) is str:
-            plt.scatter(x, y, s=area, c=colors[plot_idx.index(cls)], alpha=0.1, label='trainset_cls:'+cls)
-            plt.scatter(calib_x, calib_y, marker='x', c=colors[plot_idx.index(calib_cls) + 1], alpha=0.3, label='calib_cls:'+calib_cls)
-        elif type(cls) is int:
-            plt.scatter(x, y, s=area, c=colors[plot_idx == cls], alpha=0.1, label='trainset_cls:'+str(cls))
-            plt.scatter(calib_x, calib_y, s=area, marker='x', c=colors[(plot_idx==(calib_cls))+1], alpha=0.3, label='calib_cls:'+str(calib_cls))
+            plt.scatter(x, y, s=area, c=colors[ids_or_names.index(cls)], alpha=0.1, label='trainset_cls:'+cls)
+            plt.scatter(calib_x, calib_y, marker='x', c=colors[ids_or_names.index(calib_cls) + 1], alpha=0.3, label='calib_cls:'+calib_cls)
 
-        line_color = colors[(plot_idx==(calib_cls))+1]
+        elif type(cls) is int:
+            plt.scatter(x, y, s=area, c=colors[ids_or_names.index(cls)], alpha=0.1, label='trainset_cls:'+str(cls))
+            plt.scatter(calib_x, calib_y, s=area, marker='x', c=colors[ids_or_names.index(calib_cls) + 1], alpha=0.3, label='calib_cls:'+str(calib_cls))
+
+        line_color = colors[ids_or_names.index(calib_cls) + 1]
+
         plt.plot([np.min(calib_x),np.max(calib_x)], [np.min(calib_y), np.min(calib_y)], c=line_color) #buttom
         plt.plot([np.min(calib_x),np.max(calib_x)], [np.max(calib_y), np.max(calib_y)], c=line_color) #top
         plt.plot([np.min(calib_x),np.min(calib_x)], [np.min(calib_y), np.max(calib_y)], c=line_color) #left
@@ -92,7 +94,7 @@ def plot_wh(wh_list, calib_wh_list, ids_or_names=None, plot_idx=None):
     plt.xlabel('w')
     plt.ylabel('h')
     plt.legend()
-    plt.savefig(r'wh distribution.png', dpi=600)
+    plt.savefig(r'wh distribution_coco2017.png', dpi=600)
     plt.show()
     # print(ids_or_names)
     return
@@ -104,6 +106,7 @@ if __name__ == "__main__":
     parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC format')
     parser.add_argument('--train_json_path', '-tj', default=None, help='folder of the json file for COCO format')
     parser.add_argument('--calib_json_path', '-cj', default=None, help='folder of the json file for COCO format')
+    parser.add_argument('--calib_percentage', '-cp', default=None, type=int, help='split percentage from calib_json to do calib')
     parser.add_argument('--plot_cls_idx', '-p', default=None, type=int, help='index number of class')
     args = parser.parse_args()
 
@@ -113,13 +116,28 @@ if __name__ == "__main__":
             (args.train_json_path is None) and (args.calib_json_path is None):
         wh_list, _= generate_wh_xyminmax_list(args.train_txt_path, args.xml_folder)
         calib_wh_list, _ = generate_wh_xyminmax_list(args.calib_txt_path, args.xml_folder)
+        cls_list = list(set(wh_list[0]))
+        calib_cls_list = list(set(calib_wh_list[0]))
 
     # COCO dataset format
     elif (args.train_txt_path is None) and (args.calib_txt_path is None) and \
             (args.xml_folder is None) and \
-            (args.train_json_path is not None) and (args.calib_json_path is not None):
+            ((args.train_json_path is not None) or (args.calib_json_path is not None)):
         # annFile = r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\test_dataset\coco\instances_val2017.json'
-        cls_list, wh_list, _= get_coco_wh_xyminmax(args.train_json_path)
-        calib_cls_list, calib_wh_list, _= get_coco_wh_xyminmax(args.calib_json_path)
+        if args.calib_percentage is None:
+            cls_list, _, wh_list, _ = get_coco_wh_xyminmax(args.train_json_path)
+            calib_cls_list, _, calib_wh_list, _ = get_coco_wh_xyminmax(args.calib_json_path)
+        else:
+            cls_list, _, wh_list, _ = get_coco_wh_xyminmax(args.train_json_path)
+            _, _, _, _, calib_cls_list, _, calib_wh_list, _ = \
+                generate_calibset(annFile=args.calib_json_path,
+                                  percentage=args.calib_percentage)
 
-    plot_wh(wh_list, calib_wh_list, calib_cls_list, args.plot_cls_idx)
+    print('there are %i train categories' %len(cls_list))
+    print('there are %i calib categories' %len(calib_cls_list))
+    if len(calib_cls_list)< len(cls_list):
+        raise AssertionError('please increase calib set')
+    print('there are %i train bboxes' %len(wh_list))
+    print('there are %i calib bboxes' %len(calib_wh_list))
+
+    plot_wh(wh_list, calib_wh_list, cls_list, args.plot_cls_idx)
