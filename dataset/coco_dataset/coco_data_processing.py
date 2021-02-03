@@ -30,7 +30,7 @@ def get_coco_wh_xyminmax(annFile=None, image_root=None):
     images_list = list(set(images))
     return ids_list, images, wh_list, xyminmax_list
 
-def generate_calibset(annFile=None, image_root=None, percentage=10):
+def generate_calibset(annFile=None, percentage=10):
     coco = COCO(annFile)
     annIds = coco.anns.keys()
     length = len(annIds)
@@ -62,13 +62,13 @@ def generate_calibset(annFile=None, image_root=None, percentage=10):
             calib_ids.append(category_id)
             calib_images.append(image_id)
             calib_wh_list.append([category_id, w, h])
-            calib_xyminmax_list.append([category_id, x, y, x + w, y + h])  # cat_id, xmin, ymin, xmax, ymax
+            calib_xyminmax_list.append([category_id, [x, y, x + w, y + h]])  # cat_id, xmin, ymin, xmax, ymax
 
         else:
             ids.append(category_id)
             images.append(image_id)
             wh_list.append([category_id, w, h])
-            xyminmax_list.append([category_id, x, y, x + w, y + h])  # cat_id, xmin, ymin, xmax, ymax
+            xyminmax_list.append([category_id, [x, y, x + w, y + h]])  # cat_id, xmin, ymin, xmax, ymax
 
         if (i % 1000 == 0):
             print('Finished %ik of %ik annotations' % (i / 1000, length / 1000))
@@ -76,8 +76,9 @@ def generate_calibset(annFile=None, image_root=None, percentage=10):
     ids_list = list(set(ids))
     calib_ids_list = list(set(calib_ids))
 
-    images_list = list(set(images))
-    calib_images_list = list(set(calib_images))
+    # images_list = list(set(images))
+    # calib_images_list = list(set(calib_images))
+    print('Use %i of %i annotations for calibration' % (len(calib_xyminmax_list), length))
 
     return ids_list, images, wh_list, xyminmax_list, \
            calib_ids_list, calib_images, calib_wh_list, calib_xyminmax_list

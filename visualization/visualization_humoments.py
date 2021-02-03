@@ -14,7 +14,7 @@ random.seed(2021)
 def plot_humoments(train_image_list, train_xyminmax_list,
                    calib_image_list, calib_xyminmax_list,
                    train_image_root=None, calib_image_root=None,
-                   ids_or_names=None, plot_idx=None):
+                   dataset_type=None, ids_or_names=None, plot_idx=None):
     train_cls_list = []
     train_plot_hu_moments_1 = []
     train_plot_hu_moments_2 = []
@@ -32,7 +32,15 @@ def plot_humoments(train_image_list, train_xyminmax_list,
 
     total = len(train_image_list)
     for i, train_image_name in enumerate(train_image_list):
-        train_image_path = train_image_root + str(train_image_name).zfill(12) + '.jpg'
+        if dataset_type == 'coco':
+            train_image_path = (train_image_root + str(train_image_name).zfill(12) + '.jpg') \
+                if (train_image_root is not None) else (str(train_image_name).zfill(12) + '.jpg')
+        elif dataset_type == 'voc':
+            train_image_path = (train_image_root + str(train_image_name) + '')\
+                if (train_image_root is not None) else (str(train_image_name) + '') # please check suffix to modify ''
+        else:
+            raise AssertionError('Currently, only support voc and coco dataset format')
+
         cls_list, hu_moments_1, hu_moments_2 = calculate_humoments(image_path=train_image_path, roi=train_xyminmax_list[i])
         # if cls != -1:
         for j, cls in enumerate(cls_list):
@@ -47,7 +55,15 @@ def plot_humoments(train_image_list, train_xyminmax_list,
 
     total = len(calib_image_list)
     for i, calib_image_name in enumerate(calib_image_list):
-        calib_image_path = calib_image_root + str(calib_image_name).zfill(12) + '.jpg'
+        if dataset_type == 'coco':
+            calib_image_path = (calib_image_root + str(calib_image_name).zfill(12) + '.jpg')\
+                if (calib_image_root is not None) else (str(calib_image_name).zfill(12) + '.jpg')
+        elif dataset_type == 'voc':
+            calib_image_path = (calib_image_root + str(calib_image_name) + '')\
+                if (calib_image_root is not None) else (str(calib_image_name) + '') # please check suffix to modify ''
+        else:
+            raise AssertionError('Currently, only support voc and coco dataset format')
+
         cls_list, hu_moments_1, hu_moments_2 = calculate_humoments(image_path=calib_image_path, roi=calib_xyminmax_list[i])
         for j, cls in enumerate(cls_list):
             calib_cls_list[ids_or_names.index(cls)].append(cls)
@@ -86,10 +102,10 @@ def plot_humoments(train_image_list, train_xyminmax_list,
         calib_y = np.log(np.abs(calib_plot_list[2][plot_idx])) # hu_moments_2
         if type(cls) is str:
             plt.scatter(train_x ,train_y , s=area, c=colors[ids_or_names.index(cls)], alpha=0.1, label='trainset_cls:'+cls)
-            plt.scatter(calib_x ,calib_y , s=area, marker='x', c=colors[ids_or_names.index(calib_cls)+1], alpha=0.3, label='calib_cls:'+cls)
+            plt.scatter(calib_x ,calib_y , s=area, marker='x', c=colors[ids_or_names.index(calib_cls)+1], alpha=0.5, label='calib_cls:'+cls)
         elif type(cls) is int:
-            plt.scatter(train_x ,train_y , s=area, c=colors[ids_or_names.index(cls)], alpha=0.1, label='trainset_cls:'+cls)
-            plt.scatter(calib_x ,calib_y , s=area, marker='x', c=colors[ids_or_names.index(calib_cls)+1], alpha=0.3, label='calib_cls:'+str(calib_cls))
+            plt.scatter(train_x ,train_y , s=area, c=colors[ids_or_names.index(cls)], alpha=0.1, label='trainset_cls:'+str(cls))
+            plt.scatter(calib_x ,calib_y , s=area, marker='x', c=colors[ids_or_names.index(calib_cls)+1], alpha=0.5, label='calib_cls:'+str(calib_cls))
 
         line_color = colors[ids_or_names.index(cls)+1]
         plt.plot([np.min(calib_x),np.max(calib_x)], [np.min(calib_y), np.min(calib_y)], c=line_color) #buttom
@@ -108,6 +124,7 @@ def plot_humoments(train_image_list, train_xyminmax_list,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser() 
+    parser.add_argument('--dataset_format', '-d', default=None, help='dataset format, currently only support voc and coco')
     parser.add_argument('--train_txt_path', '-t', default=None, help='path of the training txt file for VOC format')
     parser.add_argument('--calib_txt_path', '-c', default=None, help='path of the calibration txt file for VOC format')
     parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC format')
@@ -120,36 +137,39 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     # VOC dataset format
-    if (args.train_txt_path is not None) and (args.calib_txt_path is not None) and (args.xml_folder is not None) and \
-            (args.train_json_path is None) and (args.calib_json_path is None):
+    if args.dataset_format == 'voc':
+        train_ids_list = ["abn1", "abn2", "abn3", "abn4", "abn5", "abn6", "abn7", "abn8", "abn9", "abn10"]
+
         trian_xml_list, train_image_list = generate_xml_and_image_list(args.train_txt_path,
                                                                        args.xml_folder,
-                                                                       args.image_root)
+                                                                       args.train_image_root)
+
         _, train_xyminmax_list = generate_wh_xyminmax_list(args.train_txt_path, args.xml_folder)
 
         calib_xml_list, calib_image_list = generate_xml_and_image_list(args.calib_txt_path,
                                                                        args.xml_folder,
-                                                                       args.image_root)
+                                                                       args.calib_image_root)
+
         _, calib_xyminmax_list = generate_wh_xyminmax_list(args.calib_txt_path, args.xml_folder)
-        train_ids_list = ["abn1", "abn2", "abn3", "abn4", "abn5",
-                         "abn6", "abn7", "abn8", "abn9", "abn10"]
+
 
     # COCO dataset format
-    elif (args.train_txt_path is None) and (args.calib_txt_path is None) and (args.xml_folder is None) and \
-            ((args.train_json_path is not None) or (args.calib_json_path is not None)):
-        if args.calib_percentage is None:
+    elif args.dataset_format == 'coco':
             train_image_list, train_xyminmax_list = get_coco_img_bbox(args.train_json_path)
-            calib_image_list, calib_xyminmax_list = get_coco_img_bbox(args.calib_json_path)
+            if args.calib_percentage is None:
+                calib_image_list, calib_xyminmax_list = get_coco_img_bbox(args.calib_json_path)
+            else:
+                _,total_images,_,_, _,calib_image_list,_,calib_xyminmax_list = \
+                    generate_calibset(args.calib_json_path, args.calib_percentage)
+            train_ids_list, _, _, _ = get_coco_wh_xyminmax(args.train_json_path)
 
-
-            # train_ids_list, _, _, _ = get_coco_wh_xyminmax(args.train_json_path)
-            calib_ids_list, _, _, _ = get_coco_wh_xyminmax(args.calib_json_path)
-
+    else:
+        raise AssertionError('Currently, only support voc and coco dataset format')
     
     plot_humoments(train_image_list, train_xyminmax_list,
                    calib_image_list, calib_xyminmax_list,
                    args.train_image_root, args.calib_image_root,
-                   calib_ids_list, args.plot_cls_idx)
+                   args.dataset_format, train_ids_list, args.plot_cls_idx)
 
 
 

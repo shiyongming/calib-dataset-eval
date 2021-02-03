@@ -106,7 +106,7 @@ if __name__ == "__main__":
     parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC format')
     parser.add_argument('--train_json_path', '-tj', default=None, help='folder of the json file for COCO format')
     parser.add_argument('--calib_json_path', '-cj', default=None, help='folder of the json file for COCO format')
-    parser.add_argument('--calib_percentage', '-cp', default=None, type=int, help='split percentage from calib_json to do calib')
+    parser.add_argument('--calib_percentage', '-cp', default=None, type=int, help='split percentage of calib_json for calib')
     parser.add_argument('--plot_cls_idx', '-p', default=None, type=int, help='index number of class')
     args = parser.parse_args()
 
