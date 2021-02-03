@@ -30,23 +30,29 @@ def get_label_wh_xy_minmax(xml_path=None):
         labels.append([class_name])
         wh.append([class_name,w,h]) # for wh visualization
         xy.append([class_name,x,y]) # used for cropping images and visualizing Hu moments
-        xyminmax.append([class_name, xmin, ymin, xmax, ymax])
+        xyminmax.append([class_name, [xmin, ymin, xmax, ymax]])
     return labels, wh, xy, xyminmax
 
 
-def generate_xml_and_image_list(txt_path=None, xml_folder=None, image_root=''):
+def generate_xml_and_image_list(txt_path=None, xml_folder=None, image_root=None):
     f = open(txt_path)
     xml_file_list = []
     image_list = []
     for line in f:
         #generate xml list
-        xml_filename = xml_folder + str(line[:-1]) + ".xml"
+        if str(line[-5]) == '.': # 'xxx.jpg'
+            xml_filename = xml_folder + str(line[:-5]) + ".xml"
+        else:
+            xml_filename = xml_folder + str(line[:-1]) + ".xml"
         xml_file_list.append(xml_filename)
         
         #generate image filename list
         xml_tree = xml.dom.minidom.parse(xml_filename)
         rootNode = xml_tree.documentElement
-        image_name = image_root + rootNode.getElementsByTagName("filename")[0].firstChild.data
+        if image_root is not None:
+            image_name = image_root + rootNode.getElementsByTagName("filename")[0].firstChild.data
+        else:
+            image_name = rootNode.getElementsByTagName("filename")[0].firstChild.data
         image_list.append(image_name)
     return xml_file_list, image_list
 
@@ -56,10 +62,12 @@ def generate_wh_xyminmax_list(txt_path=None, xml_folder=None):
     xyminmax_list = []
     for xml_file in xml_list:
         _, wh_results, xy_results, xyminmax_results = get_label_wh_xy_minmax(xml_file)
-        for wh in wh_results:
-            wh_list.append(wh)
-        for xyminmax in xyminmax_results:
-            xyminmax_list.append(xyminmax)
+        # for wh in wh_results:
+        #     wh_list.append(wh)
+        # for xyminmax in xyminmax_results:
+        #     xyminmax_list.append(xyminmax)
+        wh_list.append(wh_results)
+        xyminmax_list.append(xyminmax_results)
 
     return wh_list, xyminmax_list
 
