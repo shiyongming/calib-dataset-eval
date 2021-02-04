@@ -1,5 +1,6 @@
 # calib-dataset-eval
-During the PTQ(Post-training Quantization) process, a calibration dataset is necessary and important. How to select the calibration dataset will affect the performance directly.
+During the PTQ(Post-training Quantization) process, a calibration dataset is necessary and important.
+How to select the calibration dataset will affect the performance directly.
 This repo aims to provide a tool to evaluate the calibration dataset before quantization.
 
 Besides, this repo also can be used to visualize the image dataset distribution for both training set and validation set.
@@ -19,11 +20,18 @@ Besides, this repo also can be used to visualize the image dataset distribution 
 
 
 ## Background
-As we know, during the quantization process, a calibration dataset is necessary. The size of calibration dataset depends on tasks and models. In other words, different type of tasks or model structures need different samples amount for calibration.
+As we know, during the quantization process, a calibration dataset is necessary.
+The size of calibration dataset depends on tasks and models.
+In other words, different type of tasks or model structures need different samples amount for calibration.
 
-There are two main reasons for the bad result of quantization. One is caused by the calibration dataset which doesn't cover the major distribution of training dataset. The other one is caused by model structure which is not suitable for quantization ([Please refer to Quantizing deep convolutional networks for efficient inference: A whitepaper](https://arxiv.org/pdf/1806.08342.pdf)).
+There are two main reasons for the bad result of quantization.
+One is caused by the calibration dataset which doesn't cover the major distribution of training dataset.
+The other one is caused by model structure which is not suitable for quantization ([Please refer to Quantizing deep convolutional networks for efficient inference: A whitepaper](https://arxiv.org/pdf/1806.08342.pdf)).
 
-For the calibration dataset, let us take TensorRT as an example. For TensorRT, experiments indicate that about 500 images are sufficient for calibrating ImageNet classification networks. However, how many images for other tasks or networks? And, when someone obtained an unsatisfying quantization result, how to check whether it was caused by the calibration dataset reason or not?
+For the calibration dataset selection, let us take TensorRT as an example.
+In TensorRT developer guide, it mentioned that experiments indicate that about 500 images are sufficient for calibrating ImageNet classification networks.
+However, how many images do the calibrator needed for other tasks or networks?
+If someone obtained an unsatisfying quantization result, how to check whether it was caused by the calibration dataset reason or not?
 
 This repo aims to provide a tool to evaluate the calibration dataset before quantization.
 This tool evaluate the calibration dataset from three aspects (or levels): 
