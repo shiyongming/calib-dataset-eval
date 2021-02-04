@@ -37,7 +37,7 @@ This repo aims to provide a tool to evaluate the calibration dataset before quan
 This tool evaluate the calibration dataset from three aspects (or levels): 
 From the input level (input image), we calculate and campare the Hu moments distribution between training set and calibration set. 
 For the output level (output result), we compare label distribution of each bonding box between training set and calibration set. 
-For the intermediate level (intermediate feature), we calaulate and compare the intermediate (embeddings) between training set and calibration set.
+For the intermediate level (intermediate feature), we calaulate and compare the features (embeddings) between training set and calibration set.
 
 ## Requirement
 - sklearn     
