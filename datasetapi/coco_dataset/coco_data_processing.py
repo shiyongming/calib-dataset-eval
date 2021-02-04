@@ -1,4 +1,4 @@
-from dataset.coco_dataset.cocoapi.coco import COCO
+from datasetapi.coco_dataset.cocoapi.coco import COCO
 
 def get_coco_wh_xyminmax(annFile=None, image_root=None):
 

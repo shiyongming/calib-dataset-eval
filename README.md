@@ -52,8 +52,8 @@ For the intermediate level (intermediate feature), we calaulate and compare the 
 git clone and build the docker
 ```shell
 git clone https://github.com/shiyongming/calib-dataset-eval.git
-cd calib-dataset-eval
-docker build -t calib-dataset-eval:v0.1 docker/
+cd calib-datasetapi-eval
+docker build -t calib-datasetapi-eval:v0.1 docker/
 ```
 
 Evaluate Hu moments ([Please refer to image moment](https://en.wikipedia.org/wiki/Image_moment#cite_note-%E2%80%9Chu-1)) distribution

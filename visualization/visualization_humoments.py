@@ -5,8 +5,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 import argparse
 import matplotlib.pyplot as plt
 import numpy as np
-from dataset.voc_dataset.voc_data_processing import generate_wh_xyminmax_list, generate_xml_and_image_list
-from dataset.coco_dataset.coco_data_processing import get_coco_wh_xyminmax, generate_calibset, get_coco_img_bbox
+from datasetapi.voc_dataset.voc_data_processing import generate_wh_xyminmax_list, generate_xml_and_image_list
+from datasetapi.coco_dataset.coco_data_processing import get_coco_wh_xyminmax, generate_calibset, get_coco_img_bbox
 from tools.calculate_humoments import calculate_humoments
 import random
 random.seed(2021)
@@ -39,7 +39,7 @@ def plot_humoments(train_image_list, train_xyminmax_list,
             train_image_path = (train_image_root + str(train_image_name) + '')\
                 if (train_image_root is not None) else (str(train_image_name) + '') # please check suffix to modify ''
         else:
-            raise AssertionError('Currently, only support voc and coco dataset format')
+            raise AssertionError('Currently, only support voc and coco datasetapi format')
 
         cls_list, hu_moments_1, hu_moments_2 = calculate_humoments(image_path=train_image_path, roi=train_xyminmax_list[i])
         # if cls != -1:
@@ -62,7 +62,7 @@ def plot_humoments(train_image_list, train_xyminmax_list,
             calib_image_path = (calib_image_root + str(calib_image_name) + '')\
                 if (calib_image_root is not None) else (str(calib_image_name) + '') # please check suffix to modify ''
         else:
-            raise AssertionError('Currently, only support voc and coco dataset format')
+            raise AssertionError('Currently, only support voc and coco datasetapi format')
 
         cls_list, hu_moments_1, hu_moments_2 = calculate_humoments(image_path=calib_image_path, roi=calib_xyminmax_list[i])
         for j, cls in enumerate(cls_list):
@@ -124,7 +124,7 @@ def plot_humoments(train_image_list, train_xyminmax_list,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser() 
-    parser.add_argument('--dataset_format', '-d', default=None, help='dataset format, currently only support voc and coco')
+    parser.add_argument('--dataset_format', '-d', default=None, help='datasetapi format, currently only support voc and coco')
     parser.add_argument('--train_txt_path', '-t', default=None, help='path of the training txt file for VOC format')
     parser.add_argument('--calib_txt_path', '-c', default=None, help='path of the calibration txt file for VOC format')
     parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC format')
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     parser.add_argument('--plot_cls_idx', '-p', default=None, type=int, help='index number of class')
     args = parser.parse_args()
     
-    # VOC dataset format
+    # VOC datasetapi format
     if args.dataset_format == 'voc':
         train_ids_list = ["abn1", "abn2", "abn3", "abn4", "abn5", "abn6", "abn7", "abn8", "abn9", "abn10"]
 
@@ -153,7 +153,7 @@ if __name__ == "__main__":
         _, calib_xyminmax_list = generate_wh_xyminmax_list(args.calib_txt_path, args.xml_folder)
 
 
-    # COCO dataset format
+    # COCO datasetapi format
     elif args.dataset_format == 'coco':
             train_image_list, train_xyminmax_list = get_coco_img_bbox(args.train_json_path)
             if args.calib_percentage is None:
@@ -164,7 +164,7 @@ if __name__ == "__main__":
             train_ids_list, _, _, _ = get_coco_wh_xyminmax(args.train_json_path)
 
     else:
-        raise AssertionError('Currently, only support voc and coco dataset format')
+        raise AssertionError('Currently, only support voc and coco datasetapi format')
     
     plot_humoments(train_image_list, train_xyminmax_list,
                    calib_image_list, calib_xyminmax_list,

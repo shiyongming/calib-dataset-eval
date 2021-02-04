@@ -6,8 +6,8 @@ from argparse import ArgumentParser
 import numpy as np
 import torch
 
-from dataset.voc_dataset.voc_data_processing import generate_xml_and_image_list
-from dataset.voc_dataset.voc_data_processing import get_label_wh_xy_minmax
+from datasetapi.voc_dataset.voc_data_processing import generate_xml_and_image_list
+from datasetapi.voc_dataset.voc_data_processing import get_label_wh_xy_minmax
 
 import mmcv
 from mmcv.ops import RoIPool
@@ -101,14 +101,14 @@ if __name__ == '__main__':
     parser.add_argument('config', help='Config file of mmdet model')
     parser.add_argument('checkpoint', help='Checkpoint file of mmdet model')
     parser.add_argument('--device', default='cuda:0', help='Device used for inference')
-    parser.add_argument('--txt_path', '-t', default=None, help='path of the txt file for VOC dataset')
-    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC dataset')
+    parser.add_argument('--txt_path', '-t', default=None, help='path of the txt file for VOC datasetapi')
+    parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC datasetapi')
     parser.add_argument('--image_folder', '-i', default=None, help='folder of images')
     parser.add_argument('--last_layer', '-l', default=None, type=int, help='the last i th feature map')
     parser.add_argument('--save_features', '-s', default=False, type=bool, help='save the features')
     args = parser.parse_args()
 
-    # VOC dataset format
+    # VOC datasetapi format
     if args.txt_path and args.xml_folder and args.image_folder:
         extract_features_array(args.config, args.checkpoint, args.device, # basic info
                             args.txt_path, args.xml_folder, args.image_folder, # VOC params

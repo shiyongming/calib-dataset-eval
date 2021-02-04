@@ -5,8 +5,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 import argparse
 import matplotlib.pyplot as plt
 import numpy as np
-from dataset.voc_dataset.voc_data_processing import generate_wh_xyminmax_list
-from dataset.coco_dataset.coco_data_processing import get_coco_wh_xyminmax, generate_calibset
+from datasetapi.voc_dataset.voc_data_processing import generate_wh_xyminmax_list
+from datasetapi.coco_dataset.coco_data_processing import get_coco_wh_xyminmax, generate_calibset
 import random
 
 random.seed(2021)
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     parser.add_argument('--plot_cls_idx', '-p', default=None, type=int, help='index number of class')
     args = parser.parse_args()
 
-    # VOC dataset format
+    # VOC datasetapi format
     if (args.train_txt_path is not None) and (args.calib_txt_path is not None) and \
             (args.xml_folder is not None) and \
             (args.train_json_path is None) and (args.calib_json_path is None):
@@ -119,11 +119,11 @@ if __name__ == "__main__":
         cls_list = list(set(wh_list[0]))
         calib_cls_list = list(set(calib_wh_list[0]))
 
-    # COCO dataset format
+    # COCO datasetapi format
     elif (args.train_txt_path is None) and (args.calib_txt_path is None) and \
             (args.xml_folder is None) and \
             ((args.train_json_path is not None) or (args.calib_json_path is not None)):
-        # annFile = r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\test_dataset\coco\instances_val2017.json'
+        # annFile = r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-datasetapi-eval\test_dataset\coco\instances_val2017.json'
         if args.calib_percentage is None:
             cls_list, _, wh_list, _ = get_coco_wh_xyminmax(args.train_json_path)
             calib_cls_list, _, calib_wh_list, _ = get_coco_wh_xyminmax(args.calib_json_path)

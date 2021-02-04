@@ -132,13 +132,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # trainset_feature_pca, testset_feature_projected, _ = feature_pca(
-    #     npfile_for_cal_pca=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_features_3.npy',
-    #     npfile_for_cal_projection=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_features_3.npy',
+    #     npfile_for_cal_pca=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-datasetapi-eval\temp_test_data\saved_trainset_features_3.npy',
+    #     npfile_for_cal_projection=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-datasetapi-eval\temp_test_data\saved_testset_features_3.npy',
     #     dim=2)
     # visualization_features(pca_feature=trainset_feature_pca,
-    #                        pca_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_trainset_labels_3.npy',
+    #                        pca_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-datasetapi-eval\temp_test_data\saved_trainset_labels_3.npy',
     #                        projected_feature = testset_feature_projected,
-    #                        projected_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-dataset-eval\temp_test_data\saved_testset_labels_3.npy',
+    #                        projected_feature_label_file=r'C:\Users\yoshi\Documents\Codes\MyGithub\calib-datasetapi-eval\temp_test_data\saved_testset_labels_3.npy',
     #                        dim=2)
     trainset_feature_pca, calib_feature_projected, _ = feature_pca(
         npfile_for_cal_pca=args.trainset_np_file,

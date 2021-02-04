@@ -124,16 +124,16 @@ def parse_requirements(fname='requirements.txt', with_version=True):
 
 if __name__ == '__main__':
     setup(
-        name='calib-dataset-eval',
+        name='calib-datasetapi-eval',
         version=get_version(),
-        description='Calibration dataset evaluation Toolbox',
+        description='Calibration datasetapi evaluation Toolbox',
         long_description=readme(),
         long_description_content_type='text/markdown',
         author='Yongming Shi',
         author_email='',
         keywords='quantization, calibration',
         url='https://github.com/shiyongming/calib-dataset-eval',
-        packages=find_packages(exclude=('test_dataset', 'temp_test_data', 'dataset')),
+        packages=find_packages(exclude=('test_dataset', 'temp_test_data', 'datasetapi')),
         classifiers=[
             'Development Status :: 1 - Development',
             'License :: OSI Approved :: Apache Software License',
