@@ -121,6 +121,7 @@ if __name__ == '__main__':
     parser.add_argument('--txt_path', '-t', default=None, help='path of the txt file for VOC datasetapi')
     parser.add_argument('--xml_folder', '-x', default=None, help='folder of the xml file for VOC datasetapi')
     parser.add_argument('--image_folder', '-i', default=None, help='folder of images')
+    parser.add_argument('--json_file', '-j', default=None, help='path of json file for COCO datasetapi')
     parser.add_argument('--last_layer', '-l', default=None, type=int, help='the last i th feature map')
     parser.add_argument('--save_features', '-s', default=False, type=bool, help='save the features')
     args = parser.parse_args()
