@@ -91,9 +91,10 @@ Extract feature embeddings
 python tools/extract_features.py 
     <path of mmdet config file> 
     <path of mmdet checkpoint file> 
-    -t <path/of/VOC2007/.txt file> # which contains image list
-    -x <path/of/VOC2007/Annotations/> # which contains .xml file
-    -i <image root> # prefix of the 'filename' item in .xml file
+    -t <path/of/VOC2007/.txt file> # folder path that contains image list (for VOC format)
+    -x <path/of/VOC2007/Annotations/> # folder path that contains .xml file (for VOC format)
+    -i <image root> # prefix of the 'filename' item in .xml file (for VOC format)
+    -j <json file> # path of json file of COCO format (for COCO format)
     -l <layer number> # which layer of feature embedding you want to extract (count from back to front)
     -s <boolean> # save the extracted embeddings
 ```
