@@ -1,6 +1,14 @@
 from datasetapi.coco_dataset.cocoapi.coco import COCO
 
-def get_coco_wh_xyminmax(annFile=None, image_root=None):
+def get_coco_wh_xyminmax(annFile=None):
+    """
+    Extract bonding boxes parameters from json file
+    :param annFile: COCO annotation json file
+    :return: ids_list: Category in annotation json file,
+             images: Image list of the given json file,
+             wh_list: ([[category_id, w, h]... [category_id, w, h]]),
+             xyminmax_list: ([[category_id, [xmin, ymin, xmax, ymax]]... [ ,[ , , ,]]])
+    """
 
     coco = COCO(annFile)
 
@@ -31,6 +39,19 @@ def get_coco_wh_xyminmax(annFile=None, image_root=None):
     return ids_list, images, wh_list, xyminmax_list
 
 def generate_calibset(annFile=None, percentage=10):
+    """
+    Generate the calibration dataset from the given annotation json file.
+    :param annFile: COCO annotation json file.
+    :param percentage: How much data will be split to form the calibration dataset
+    :return: ids_list: Category in the origin given json file,
+             images: Image list of the origin given json file,
+             wh_list: origin wh_list ([[category_id, w, h]... [category_id, w, h]]),
+             xyminmax_list: origin xyminmax_list ([[category_id, xmin, ymin, xmax, ymax]... []])
+             calib_ids_list: Category of calibration dataset that split from the origin json file,
+             calib_images: Image list of calibration dataset that split from the origin json file,
+             calib_wh_list: wh_list of calibration dataset ([[category_id, w, h]... [category_id, w, h]]),
+             calib_xyminmax_list: xyminmax_list of calibration dataset([[category_id, [xmin, ymin, xmax, ymax]]... [ ,[ , , ,]]])
+    """
     coco = COCO(annFile)
     annIds = coco.anns.keys()
     length = len(annIds)
@@ -84,6 +105,14 @@ def generate_calibset(annFile=None, percentage=10):
            calib_ids_list, calib_images, calib_wh_list, calib_xyminmax_list
 
 def get_coco_img_bbox(annFile=None):
+    """
+    Get img list and corresponding boxes
+    :param annFile:
+    :return: imgs: image list,
+             bboxes: all corresponding bboxes of each image. [ [[cls, bbox_1], ..., [cls, bbox_x]],  #img 1
+                                                               ...,
+                                                               [[cls, bbox_1], ..., [cls, bbox_m]] ] #img n
+    """
     imgs = []
     bboxes = []
     coco = COCO(annFile)
@@ -95,7 +124,7 @@ def get_coco_img_bbox(annFile=None):
         for ann in anns:
             cls = ann['category_id']
             bbox = (int(ann['bbox'][0]), # xmin = x
-                    int(ann['bbox'][1]), # ymin =
+                    int(ann['bbox'][1]), # ymin = y
                     int(ann['bbox'][2] + ann['bbox'][0]), # xmax = x+w
                     int(ann['bbox'][3] + ann['bbox'][1])) # ymax = y+h
             temp_boxes.append([cls, bbox])
