@@ -15,6 +15,19 @@ def plot_humoments(train_image_list, train_xyminmax_list,
                    calib_image_list, calib_xyminmax_list,
                    train_image_root=None, calib_image_root=None,
                    dataset_type=None, ids_or_names=None, plot_idx=None):
+    """
+
+    :param train_image_list: image list of training set
+    :param train_xyminmax_list: bboxes list of every image in training set
+    :param calib_image_list: image list of calibration set
+    :param calib_xyminmax_list: bboxes list of every image in calibration set
+    :param train_image_root: str before the image path if image list is the relative path
+    :param calib_image_root: str before the image path if image list is the relative path
+    :param dataset_type: voc or coco
+    :param ids_or_names: category or id list
+    :param plot_idx: which category or id will be plot
+    :return:
+    """
     train_cls_list = []
     train_plot_hu_moments_1 = []
     train_plot_hu_moments_2 = []

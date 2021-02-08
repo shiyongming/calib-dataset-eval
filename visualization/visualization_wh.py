@@ -24,6 +24,14 @@ random.seed(2021)
 
 
 def plot_wh(wh_list, calib_wh_list, ids_or_names=None, plot_idx=None):
+    """
+
+    :param wh_list: w & h list of training set
+    :param calib_wh_list: w & h list of calibration set
+    :param ids_or_names: category or id list
+    :param plot_idx: which category or id will be plot
+    :return:
+    """
     r = lambda: random.randint(0,255)
     colors=[]
     for i in range(len(ids_or_names) + 1):

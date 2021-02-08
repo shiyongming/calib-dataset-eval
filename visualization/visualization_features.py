@@ -32,6 +32,15 @@ def visualization_features(pca_feature=None,
                            projected_feature=None,
                            projected_feature_label_file=None,
                            dim=2):
+    """
+
+    :param pca_feature: PCA of training set features
+    :param pca_feature_label_file: Corresponding label of every feature, ONLY can be used when each image contains ONE bbox
+    :param projected_feature: feature projection of calibration set on PCA space
+    :param projected_feature_label_file: Corresponding label of every feature, ONLY can be used when each image contains ONE bbox
+    :param dim: 2 or 3 for visualization
+    :return:
+    """
     # load labels of pca features
     if pca_feature_label_file is not None:
         pca_feature_labels = np.load(pca_feature_label_file)
