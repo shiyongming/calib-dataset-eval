@@ -2,11 +2,16 @@ import argparse
 import cv2 as cv
 
 def calculate_humoments(image=None, image_path=None, isRGB=True, roi=None):
-    '''
-    image: image numpy array
-    roi: bonding box [class_name, xmin, ymin, xmax, ymax]
-    '''
-    # roi = [['abn1',[35,317,111,384]], ..., [cls, [xmin, ymin, xmax, ymax]]]
+    """
+    Get classes hu moments from given image
+    :param image: image numpy array
+    :param image_path: path of image file
+    :param isRGB: RGB color image or not
+    :param roi: all bonding boxes of given image [ [class_name, [xmin, ymin, xmax, ymax], ... ], ... [] ]
+    :return: classes: bbox class list of given image,
+             HuMoments_1: HU moments_1 of all bboxes in the given image
+             HuMoments_2: HU moments_2 of all bboxes in the given image
+    """
 
     if image_path is not None:
         image = cv.imread(image_path)
