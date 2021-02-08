@@ -25,10 +25,10 @@ def calculate_features(model, img, last_layer=1):
         model (nn.Module): The loaded detector.
         imgs (str/ndarray or list[str/ndarray]): Either image files or loaded
             images.
+        last_layer (int)：which layer of feature map will be extract and returned
 
     Returns:
-        If imgs is a str, a generator will be returned, otherwise return the
-        detection results directly.
+        backbone_outputs: embeddings of the given layer of the backbone.
     """
     cfg = model.cfg
     device = next(model.parameters()).device  # model device
@@ -74,21 +74,38 @@ def calculate_features(model, img, last_layer=1):
 
 def extract_features_array(config, checkpoint, device,
                            txt_path, xml_folder, image_folder,
+                           # json_file,
                            last_layer, save_features):
+    """
+    Extract feature list of given dataset
+    :param config: mmdetection config file
+    :param checkpoint: mmdetection checkpoint file
+    :param device: GPU number
+    :param txt_path: VOC txt filepath
+    :param xml_folder: VOC xml filepath
+    :param image_folder: VOC image folder path
+    :param json_file: COCO json filepath
+    :param last_layer: which layer's embeddings will be output
+    :param save_features: save the embeddings or not
+    :return: feature_list: features of specified backbone layer of every image
+             label_list: corresponding label of feature (ONLY can be used when each image contains only ONE object)
+    """
     # build the model from a config file and a checkpoint file
     model = init_detector(config, checkpoint, device=device)
     # get test img list
-    xml_file_list, image_list = generate_xml_and_image_list(txt_path, xml_folder, image_folder)
+    xml_file_list, image_list = generate_xml_and_image_list(txt_path, xml_folder, image_folder) #VOC format
+    # image_list = get_coco_img_bbox(json_file) # COCO format
+
     # calculate backbone features
     feature_list = []
     label_list = []
     for img in image_list:
-        print(img)
-        xml_file = xml_file_list[image_list.index(img)]
+        print(img) #print img filename
         backbone_features = calculate_features(model, img, last_layer)
+        # label_list ONLY can be used when each image only contains ONE box
+        xml_file = xml_file_list[image_list.index(img)]
         label, _, _, _ = get_label_wh_xy_minmax(xml_file)
         label_list.append(label)
-        #featuted_list.append(backbone_features)
         feature_list.append(backbone_features.cpu().numpy())
     if save_features:
         np.save("saved_features_%s" %args.last_layer, np.array(feature_list))
