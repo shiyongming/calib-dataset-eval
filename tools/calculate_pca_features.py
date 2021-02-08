@@ -6,6 +6,17 @@ def feature_pca(npfile_for_cal_pca=None,
                 npfile_for_cal_projection=None,
                 nparray_for_cal_projection=None,
                 dim=2):
+    """
+    Calculate the PCA of training set and the projection of calibration set on PCA space
+    :param npfile_for_cal_pca: Numpy file of origin features (training set features)
+    :param nparray_for_cal_pca: Numpy array of origin features (training set features)
+    :param npfile_for_cal_projection: Numpy file of features (calibration set) that will be projected to origin features space
+    :param nparray_for_cal_projection: Numpy array of features (calibration set) that will be projected to origin features space
+    :param dim: output dimension (2 or 3) for visualization
+    :return: feature_1_pca: PCA results of origin features
+             feature_2_projected: results of features (calibration set) that was projected the PCA space
+             Vt: PCA space
+    """
     # load trainset features
     if (npfile_for_cal_pca is not None) and (nparray_for_cal_pca is not None):
         raise AssertionError("Numpy file and numpy array can't be given at the same time.")
